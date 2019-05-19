@@ -1,0 +1,50 @@
+namespace jayesh_insurance_blockchain_claim_process_network.claims
+
+participant Insurancecompany identified by Company_Registration_No {
+  o String Company_Registration_No
+  o String Company_Name
+  o String Company_Type
+  o Double Balance
+}
+
+participant Claimer identified by Claimer_id {
+  o String Claimer_id
+  o String Name
+  o String Residential_Address
+  o Double Contact_No
+  o Double Age
+  o Double Balance
+}
+
+asset Submitclaim identified by Claim_No {
+  o String Claim_No
+  o String Claim_Policy_Type
+  o String Claim_Reason
+  o Double Amount
+  o Boolean sent
+}
+
+asset Contract identified by Contractid {
+  o String Contractid
+  o String Type
+  o Double Contract_Validity_in_years
+  --> Insurancecompany insurancecompany
+  --> Claimer  claimer 
+}
+
+transaction DeclareClaim {
+  --> Insurancecompany insurancecompany
+  --> Claimer  claimer 
+  --> Submitclaim submitclaim
+} 
+
+transaction SignContract {
+  --> Insurancecompany insurancecompany
+  --> Contract contract
+}
+
+event DeclarationClaimEvent {
+  --> Submitclaim submitclaim
+  o Double balanceInsurancecompanyInitial
+  o Double balanceInsurancecompanyFinal
+}
